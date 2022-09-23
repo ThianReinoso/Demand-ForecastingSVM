@@ -7,9 +7,10 @@ if __name__ == "__main__":
     models = Models()
 
     data = utils.load_from_csv('./data/DatosDistribuidora.csv')
+    #X, y = utils.features_target(data, ['CodProducto', 'Producto', 'Categoria', 'Activo', 'F_vencimiento', 'P_compra', 'P_venta', 'Margen' ,'target'],['target'])
     X, y = utils.features_target(data, ['target'],['target'])
 
-    models.training(X,y)
+    models.grid_training(X,y)
 
     print(data)
 
