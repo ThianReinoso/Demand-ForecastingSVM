@@ -12,6 +12,6 @@ if __name__ == "__main__":
 
     models.grid_training(X,y)
 
-    print(data)
+    #print(data)
 
     #creacion_exportacion_modelo

@@ -4,12 +4,10 @@ import pandas as pd
 import sklearn
 import matplotlib.pyplot as plt 
 
-# Importamos los módulos específicos
-
 from sklearn.decomposition import PCA
 from sklearn.decomposition import IncrementalPCA
 
-from sklearn.linear_model import LinearRegression
+from sklearn.svm import SVR
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -39,32 +37,32 @@ if __name__ == "__main__":
     
     # Llamamos y configuramos nuestro algoritmo pca
     
-    '''EL número de componentes es opcional, ya que por defecto si no le pasamos el número de componentes lo asignará de esta forma:
+    '''El número de componentes es opcional, ya que por defecto si no le pasamos el número de componentes lo asignará de esta forma:
     a: n_components = min(n_muestras, n_features)'''
-    pca = PCA(n_components=3)
+    pca = PCA(n_components=26)
     
     # Esto para que nuestro PCA se ajuste a los datos de entrenamiento que tenemos como tal
     pca.fit(X_train)
     
     #Como haremos una comparación con incremental PCA, haremos lo mismo para el IPCA.
     
-    '''EL parámetro batch se usa para crear pequeños bloques, de esta forma podemos ir entrenandolos
+    '''El parámetro batch se usa para crear pequeños bloques, de esta forma podemos ir entrenandolos
     poco a poco y combinarlos en el resultado final'''
-    ipca = IncrementalPCA(n_components=25, batch_size=10)
+    ipca = IncrementalPCA(n_components=20, batch_size=26)
     
     #Esto para que nuestro PCA se ajuste a los datos de entrenamiento que tenemos como tal
     ipca.fit(X_train)
     
     ''' Aquí graficamos los números de 0 hasta la longitud de los componentes que me sugirió el PCA o que
-    me generó automáticamente el pca en el eje x, contra en el eje y, el valor de la importancia
+    generó automáticamente el pca en el eje x, contra en el eje y, el valor de la importancia
     en cada uno de estos componentes, así podremos identificar cuáles son realmente importantes
     para nuestro modelo '''
     
     plt.plot(range(len(pca.explained_variance_)), pca.explained_variance_ratio_)
     plt.show()
     
-    #Ahora vamos a configurar nuestra regresión logística
-    regression = LinearRegression()
+    #Ahora vamos a configurar nuestra regresión lineal
+    regression = SVR(kernel='linear', epsilon=0.05, C=5)
     
     # Configuramos los datos de entrenamiento
     dt_train = pca.transform(X_train)

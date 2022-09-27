@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import KernelPCA
 
 
-from sklearn.linear_model import LinearRegression
+from sklearn.svm import SVR
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -37,14 +37,14 @@ if __name__ == "__main__":
     print(X_train.shape)
     print(y_train.shape)
 
-    kpca = KernelPCA(n_components=34, kernel='poly' )
+    kpca = KernelPCA(n_components=25, kernel='poly' )
     kpca.fit(X_train)
 
     dt_train = kpca.transform(X_train)
     dt_test = kpca.transform(X_test)
 
-    regression = LinearRegression()
-
+    regression = SVR(kernel='linear', epsilon=0.05, C=100)
+    
     regression.fit(dt_train, y_train)
     print("SCORE KPCA: ", regression.score(dt_test, y_test))
 
