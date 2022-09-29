@@ -39,7 +39,7 @@ if __name__ == "__main__":
     
     '''El número de componentes es opcional, ya que por defecto si no le pasamos el número de componentes lo asignará de esta forma:
     a: n_components = min(n_muestras, n_features)'''
-    pca = PCA(n_components=26)
+    pca = PCA(n_components=20)
     
     # Esto para que nuestro PCA se ajuste a los datos de entrenamiento que tenemos como tal
     pca.fit(X_train)
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     
     '''El parámetro batch se usa para crear pequeños bloques, de esta forma podemos ir entrenandolos
     poco a poco y combinarlos en el resultado final'''
-    ipca = IncrementalPCA(n_components=20, batch_size=26)
+    ipca = IncrementalPCA(n_components=20, batch_size=27)
     
     #Esto para que nuestro PCA se ajuste a los datos de entrenamiento que tenemos como tal
     ipca.fit(X_train)

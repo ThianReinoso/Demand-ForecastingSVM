@@ -14,12 +14,12 @@ class Models:
             'SVR' : SVR(),
             'GRADIENT' : GradientBoostingRegressor()
         }
-
         self.params = {
             'SVR' : {
                 'kernel' : ['linear', 'poly', 'rbf'],
                 'gamma' : ['auto', 'scale'],
-                'C' : [1,5,10,100]
+                'epsilon': [0.05, 0.1, 0.2, 0.3],
+                'C' : [1, 5, 10, 100]
             }, 'GRADIENT' : {
                 'loss' : ['squared_error', 'absolute_error'],
                 'learning_rate' : [0.01, 0.05, 0.1]
@@ -29,9 +29,8 @@ class Models:
     def grid_training(self, X,y):
         best_score = 999
         best_model = None
-        
         for name, reg in self.reg.items():
-            grid_reg = GridSearchCV(reg, self.params[name], cv=3).fit(X, y.values.ravel())
+            grid_reg = GridSearchCV(reg, self.params[name], cv=3).fit(X.values, y.values.ravel())
             score = np.abs(grid_reg.best_score_)
             if score < best_score:
                 best_score = score
